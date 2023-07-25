@@ -1,0 +1,60 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row my-5">
+    <div class="col-md-10 mx-auto">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+<h1>Liste des monuments</h1>
+<a href="{{ path('add_monument') }}" class="btn btn-sm btn-primary">Ajouter</a>
+            </div>
+            <div class="card-body">
+    <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Adresse</th>
+                            <th>Description</th>
+                            <th>image</th>
+                            <th>link Map</th>
+                            
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for monumment in monumments %}
+                        <tr>
+                            <td>{{ monumment.nom }}</td>
+                            <td>{{ monumment.adresse }}</td>
+                            <td>{{ monumment.description }}</td>
+    <td><img src="{{ asset('images/' ~ monumment.image) }}" alt="{{monumment.image}}" width="77"
+                                    height="50" class="fluid my-2 rounded"></td> 
+                           <td>{{monumment.linkMap }}</td>
+                            <td>
+                                <a href="{{ path('edit_monum',{id :monumment.id,id2:monumment.idm}) }}" class="btn btn-sm btn-warning" data-id="">Modifier</a>
+                                <a href="{{ path('monum_delete',{id :monumment.id,id2:monumment.idm}) }}" class="btn btn-sm btn-danger"  onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet hôtel ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+         </div>
+        </div>
+    </div>
+</div>
+   
+
+    {# <ul>
+        {% for restaurant in restaurants %}
+            <li>{{ restaurant.id }}</li>
+            <li>{{ restaurant.nom }}</li>
+            <li>{{ restaurant.adresse }}</li>
+            <li>{{ restaurant.description }}</li>
+            <li>{{ restaurant.image }}</li>
+            <li>{{ restaurant.linkMap }}</li>
+        {% endfor %}
+    </ul> #}
+{% endblock %}

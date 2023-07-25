@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row my-5">
+    <div class="col md 10 mx-auto">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1>Liste des activités</h1>
+                <a href="{{ path('add_activite') }}" class="btn btn-sm btn-primary">Ajouter</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Adresse</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Link Map</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activite in activites %}
+                        <tr>
+                            <td>{{ activite.nom }}</td>
+                            <td>{{ activite.adresse }}</td>
+                            <td>{{ activite.description }}</td>
+                            <td><img src="{{ asset('images/' ~ activite.image) }}" alt="{{activite.image}}" width="77"
+                                    height="50" class="fluid my-2 rounded"></td>
+                            <td>{{ activite.linkMap }}</td>
+                            <td>
+                                <a href="{{ path('edit_activite',{id :activite.id , id2:activite.ida}) }}" class="btn btn-sm btn-warning" data-id="{{ activite.id }}">Modifier</a>
+                                <a href="{{ path('activite_delete',{id :activite.id , id2:activite.ida}) }}" class="btn btn-sm btn-danger" data-id="{{ activite.id }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

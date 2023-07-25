@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vister le Maroc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('styleCasaBlanca.css') }}">
+   
+</head>
+
+<body>
+
+        <section class="showcase ">
+    {% for restaurant in restaurants %}
+
+            <div id="slider">
+                <figure>                        <img src="{{ asset('images/'~ restaurant.image) }}">
+             
+                                                <img src="{{ asset('assets/img/tet.jpg') }}">
+                                                <img src="{{ asset('assets/img/qq.jpg')  }}">
+                                                <img src="{{asset('assets/img/e.jpg')  }}">
+
+                </figure>
+            </div>
+            <div class="overlay"></div>
+            <div class="text">
+                <h1>WELCOME TO         {{ restaurant.nom }}
+ </h1>
+                <p>Soyez le bienvenue.</p>
+            </div>
+        </section>            
+
+        <br><br> <section class="parties">
+        <h1> veuillez decouvrir votre restaurant </h1>
+        <br><br><br><br>
+      
+        <div class="section-container">
+              <div class="columns image"style="background-image:url({{ asset('assets/img/f.jpg') }})">
+
+                &nbsp;
+            </div>
+            <div class="columns content">
+                <div class="content-container">
+                    <h5>Nos equipements </h5>
+                    <p>
+                              {{ restaurant.description }}<br>
+
+                        <br><br>
+                        <a href="" > decouvrir plus </a>
+                    </p>
+ 
+
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+
+                &nbsp;
+            </div>
+        </div>
+        <br><br><br><br>
+        <div class="section-container">
+
+            <div class="columns content">
+                <div class="content-container">
+                    <h5>Notre adresse</h5>
+                    <p>
+                                       {{ restaurant.adresse }}<br>
+
+                        <br><br>
+                        <a href="" > decouvrir plus </a>
+                    </p>
+                    
+
+
+                </div>
+            </div>
+            <div class="columns image"
+                style="background-image:url('{{ asset('assets/img/a.jpg') }}')">
+                 &nbsp;
+
+        </div>
+        
+        </div>
+
+ <br><br><br><br>
+      
+
+     </section>
+   
+            
+
+    {% endfor %}
+ <br><br><br>
+    <section class="maps">
+<iframe src="https://www.google.com/maps/d/u/0/embed?mid=10Qk6BX2zEBFKsCJPz0o1B-Vdv7XHmkI&ehbc=2E312F" width="640" height="480"></iframe>  
+
+</body>
+</html>

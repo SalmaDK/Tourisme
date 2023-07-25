@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row my-5">
+    <div class="col-md-10 mx-auto">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1>Liste des restaurants</h1>
+                <a href="{{ path('add_restaurant') }}" class="btn btn-sm btn-primary">Ajouter</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Adresse</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Link Map</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for restaurant in restaurants %}
+                        <tr>
+                            <td>{{ restaurant.nom }}</td>
+                            <td>{{ restaurant.adresse }}</td>
+                            <td>{{ restaurant.description }}</td>
+                            <td><img src="{{ asset('images/' ~ restaurant.image) }}" alt="{{restaurant.image}}" width="77"
+                                    height="50" class="fluid my-2 rounded"></td>
+                            <td>{{ restaurant.linkMap }}</td>
+                            <td>
+                                <a href="{{ path('edit_restaurant',{id :restaurant.id,id2:restaurant.idr}) }}" class="btn btn-sm btn-warning" data-id="{{ restaurant.id }}">Modifier</a>
+                                <a href="{{ path('restaurant_delete',{id :restaurant.id,id2:restaurant.idr}) }}" class="btn btn-sm btn-danger" data-id="{{ restaurant.id }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce restaurant ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

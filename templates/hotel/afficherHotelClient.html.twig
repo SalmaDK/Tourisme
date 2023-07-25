@@ -1,0 +1,32 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Hotel{% endblock %}
+
+{% block body %}
+
+
+	<div class="row my-5">
+		<div class="col-md-12">
+			<div class="row">
+            {% for hotel in hotels %}
+						<div class="col-md-4">
+							<div class="card" style="width:18rem;height: 100%;">
+								<img src="{{ asset('images/' ~ hotel.image) }}" alt="{{hotel.image}}" class="card-img-top">
+								<div class="card-body">
+									<h5 class="card-title">{{hotel.nom}}</h5>
+									<p class="card-text">{{hotel.adresse}}</p>
+									<p class="card-text">{{hotel.description}}</p>
+
+								</div>
+							</div>
+						</div>					
+
+					
+					{% endfor %}
+
+					
+				
+			</div>
+		</div>
+	</div>
+{% endblock %}

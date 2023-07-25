@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
+    <!-- Google fonts-->
+    <link
+        href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href=" {{ asset('css/styles.css') }} " rel="stylesheet" />
+    <title>Vister Tetouan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.0/css/bootstrap.min.css">
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <section class="home" id="home">
+        <section class="showcase ">
+            <header>
+                <h2 class="logo">Maroc المغرب</h2>
+                <div class="toggle "> </div>
+            </header>
+
+            <video src="{{ asset('maroc2.mp4') }}" muted loop autoplay id="myVideo"></video>
+            <div class="overlay"></div>
+            <div class="text">
+                <h2> EXPLORER Tetouan </h2>
+                <h3> nous vous souhaitons le bienvenue </h3>
+                <p> Ses charmantes médinas, ses villages traditionnels
+                    et sa diversité culturelle vibrante en font une destination incontournable dans le monde arabe.
+                    Explorez son riche passé historique, son architecture magnifique et
+                    ses expériences locales uniques dans cette fantastique ville.</p>
+
+            </div>
+        </section>
+
+        <div class="menu">
+            <a href="{{ asset('LOGIN/log.html') }}">SE CONNECTER </a>
+        </div>
+
+        <script>
+            const menuToggle = document.querySelector('.toggle')
+            const showcase = document.querySelector('.showcase')
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active')
+                showcase.classList.toggle('active')
+            })
+
+        </script>
+    </section>
+
+
+
+    <section class="menu2">
+        <nav>
+            <div class="centrer">
+                <uL>
+                    <li><a href="#propo"> A propos </a></li>
+                    <li><a href="#nouv"> Nouveaute </a></li>
+
+                    <li><a href="#explore"> explorer les Hotels </a></li>
+                    <li><a href="#resto"> explorer les restaurants </a></li>
+                    <li><a href="#ss"> explorer les places divertisements </a></li>
+
+                    <li><a href="#contact"> contacter nous </a></li>
+                </uL>
+            </div>
+        </nav>
+    </section>
+    <h1 class="site-heading text-center text-faded d-none d-lg-block">
+        <span class="site-heading-upper text-primary mb-3">A propos de </span>
+        <span class="site-heading-lower">Tetouan</span>
+    </h1>
+    <section class="page-section about-heading">
+        <div class="container">
+            <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{{ asset('assets/img/about.jpg') }}" alt="..." />
+            <div class="about-heading-content">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-10 mx-auto">
+                        <div class="bg-faded rounded p-5">
+                            <h2 class="section-heading mb-4">
+                                <span class="section-heading-upper">Richesse historique, Tetouan</span>
+                                <span class="section-heading-lower">Soyez le BIENVENUE</span>
+                            </h2>
+                            <p>Tétouan, la perle du nord du Maroc, enchante par son architecture mauresque, ses ruelles
+                                pittoresques et ses couleurs envoûtantes. Classée au patrimoine mondial de l'UNESCO, sa
+                                médina offre un voyage dans le temps. Entre plages paradisiaques et montagnes du Rif,
+                                cette ville magique séduit par son art, sa culture et sa cuisine délicieuse. Un joyau
+                                inoubliable à découvrir..</p>
+                            <p class="mb-0">
+                                Tetouan, une ville riche en histoire,
+                                <em> fut</em>
+                                fondée au 3ème siècle av. J.-C. Elle a connu l'influence des Romains, des Vandales et
+                                des Arabes. Devenue la capitale du Protectorat espagnol au 20ème siècle, son patrimoine
+                                culturel reflète un mélange unique de cultures et de traditions. Aujourd'hui, Tetouan
+                                est un trésor historique du Maroc, attirant les visiteurs du monde entier..
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <h1 class="site-heading text-center text-faded d-none d-lg-block">
+        <span class="site-heading-upper text-primary mb-3" id="nouv">Nouveaute du</span>
+        <span class="site-heading-lower">Conseil regional</span>
+    </h1>
+
+    <section class="page-section about-heading">
+        <div class="container carousel slide" data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-bs-target=".carousel" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target=".carousel" data-bs-slide-to="1" class="active"></li>
+            </ol>
+        {% for nouveaute in nouveautes %}
+
+            <div class="carousel-inner">
+                <!-- slide 1 -->
+                <div class="carousel-item active ">
+                    <div class="container">
+                        <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{{ asset('images/'~ nouveaute.image) }}"
+                            alt="..." />
+                        <div class="about-heading-content">
+                            <div class="row">
+                                <div class="col-xl-9 col-lg-10 mx-auto">
+                                    <div class="bg-faded rounded p-5">
+                                        <h2 class="section-heading mb-4">
+                                            <div class="d-flex justify-content-between align-items-center" style ="font-size: 1rem;">  <span class="section-heading-upper">{{ nouveaute.titreU }} </span>
+                                            <span > {{ nouveaute.datePub|date("Y-m-d") }}</span> </div>
+                                           
+                                           
+                                            <span class="section-heading-lower">{{ nouveaute.titreD }}</span>
+                                        </h2>
+                                        <p id="ss">>{{ nouveaute.description }}</p>
+                                        <p class="mb-0">
+                                            <em> </em>
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+                  {% endfor %}
+      <!-- Add more carousel-item divs for additional slides if needed -->
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <section class="explore" id="explore">
+        <h1 class="heading"> Hotels populaires</h1>
+        <h3 class="title">Decouvrir avec nous</h3>
+
+        <div class="card-container">
+        {% for hotel in hotels %}
+            <div class="card">
+                        <img src="{{ asset('images/'~ hotel.image) }}">
+                        <div class="infos">
+                            <h3>{{ hotel.nom }}</h3>
+                            <div class="stars">
+                            {% for i in 1..hotel.nbretoile %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                            </div>
+                            
+                            <a href="{{ path('detail_hotel',{id:hotel.idh}) }}">decouvrir maintenant</a>
+                        </div>
+                    </div>
+        {% endfor %}
+
+        
+            
+        </div>
+
+        </div>
+
+        </div>
+
+
+        </div>
+    </section>
+
+
+
+    <section class="explore" id="S">
+        <h1 class="heading" id="resto"> Restaurants populaires</h1>
+        <h3 class="title">Decouvrir avec nous</h3>
+        <div class="card-container">
+        {% for restaurant in restaurants %}
+                  <div class="card">
+                <img src="{{ asset('images/'~ restaurant.image) }}">
+                <div class="infos">
+                    <h3>{{restaurant.nom}}</h3>
+                    <a href="{{ path('detail_restaurant',{id:restaurant.idr}) }}">decouvrir maintenant</a>
+                </div>
+            </div>
+        {% endfor %}
+      
+        </div>
+
+
+ <section class="explore" id="S">
+        <h1 class="heading" id="resto">Place divertisement</h1>
+        <h3 class="title">Decouvrir avec nous</h3>
+        <div class="card-container">
+
+                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="{{ path('detail_musee') }}">Monuments historiques</a></div>
+
+
+                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="{{ path('detail_musee') }}">Activite a faire !!</a></div>
+                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="{{ path('detail_musee') }}">Musee</a></div>
+
+ </div>
+
+
+
+
+        <div>
+            <h1 class="site-heading text-center text-faded d-none d-lg-block">
+                <span class="site-heading-upper text-primary mb-3" id="">A propos</span>
+                <span class="site-heading-lower">nous somme......</span>
+            </h1>
+        </div>
+        <!-- contectez nous -->
+        <h1 class="site-heading text-center text-faded d-none d-lg-block">
+            <span class="site-heading-upper text-primary mb-3" id="contact">Contacter nous</span>
+        </h1>
+        <div style="display: flex;justify-content: center;align-items: center;">
+          <form class="formcontact" style="width: 600px;">
+            <div class="form-group">
+              <input type="text" class="form-control text-center" id="fullname" aria-describedby="fullname" placeholder="full name">
+            </div>
+            <div class="form-group" style="margin-top: 40px;">
+              <input type="text" class="form-control text-center" id="phone" placeholder="Phone Number">
+            </div>
+            <div class="form-group" style="margin-top: 40px;">
+              
+              <input type="text" class="form-control text-center" id="subject" placeholder="Subject">
+            </div>
+            <div class="form-group" style="margin-top: 40px;">
+              <textarea class="form-control text-center" id="textzone" placeholder="Message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Send</button>
+          </form>
+        </div>
+    </section>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

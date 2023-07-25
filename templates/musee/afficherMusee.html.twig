@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row my-5">
+    <div class="col-md-10 mx-auto">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1>Liste des musées</h1>
+                <a href="{{ path('add_musee') }}" class="btn btn-sm btn-primary">Ajouter</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Adresse</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Link Map</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for musee in musees %}
+                        <tr>
+                            <td>{{ musee.nom }}</td>
+                            <td>{{ musee.adresse }}</td>
+                            <td>{{ musee.description }}</td>
+                            <td><img src="{{ asset('images/' ~ musee.image) }}" alt="{{musee.image}}" width="77"
+                                    height="50" class="fluid my-2 rounded"></td>
+                            <td>{{ musee.linkMap }}</td>
+                            <td>
+                                <a href="{{ path('edit_musee',{id :musee.id,id2:musee.idm}) }}" class="btn btn-sm btn-warning" data-id="{{ musee.id }}">Modifier</a>
+                                <a href="{{ path('musee_delete',{id :musee.id , id2:musee.idm}) }}" class="btn btn-sm btn-danger" data-id="{{ musee.id }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce musée ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
