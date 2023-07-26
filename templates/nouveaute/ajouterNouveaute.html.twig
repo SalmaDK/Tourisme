@@ -1,7 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'base4.html.twig' %}
 
-{% block title %}Hello NouveauteController!{% endblock %}
+{% block title %Nouveauté{% endblock %}
 
 {% block body %}
-{{ form(nouveauteForm) }}
+<div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Nouveauté</h3>
+              </div>
+              <div class="card-body">
+            {{ form(nouveauteForm) }}
+              </div>
+            </div>
+
 {% endblock %}

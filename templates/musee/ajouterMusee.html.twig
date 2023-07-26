@@ -1,7 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'base4.html.twig' %}
 
-{% block title %}Hello MuseeController!{% endblock %}
+{% block title %}Musée!{% endblock %}
 
 {% block body %}
-{{ form(museeForm) }}
+<div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Musée</h3>
+              </div>
+              <div class="card-body">
+             {{ form(museeForm) }}
+              </div>
+            </div>
+
 {% endblock %}

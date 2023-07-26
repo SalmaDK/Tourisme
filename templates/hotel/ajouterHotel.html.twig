@@ -1,8 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'base4.html.twig' %}
 
-{% block title %}Hello HotelController!{% endblock %}
+{% block title %}Hotel{% endblock %}
 
 {% block body %}
-{{ form(hotelForm) }}
-
+<div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Hotel</h3>
+              </div>
+              <div class="card-body">
+              {{ form(hotelForm) }}
+              </div>
+</div>
 {% endblock %}

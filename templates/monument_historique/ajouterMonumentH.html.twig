@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MonumentHistoriqueController!{% endblock %}
+{% block title %}Monument{% endblock %}
 
 {% block body %}
-    {{ form(monumentForm) }}
+<div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Monument</h3>
+              </div>
+              <div class="card-body">
+             {{ form(monumentForm) }}
+              </div>
+            </div>
+    
 {% endblock %}
