@@ -120,6 +120,21 @@ class MonumentHistoriqueController extends AbstractController
         return $this->redirectToRoute('monum_list');
     }
 
+    #[Route('/detail/monum', name:'detail_monum')]
+    public function detailMonum(EntityManagerInterface $entityManager ): Response
+    {
+        $query = $entityManager->createQueryBuilder()
+        ->select('e.id','m.id as idm','e.nom','e.adresse','e.description','e.image', 'e.linkMap')
+        ->from(Endroit::class, 'e')
+        ->join(MonumentHistorique::class, 'm', 'WITH', 'm.idEndroit = e.id')
+        ->getQuery();
+        $results = $query->getResult();
+
+        return $this->render('monument_historique/afficherDetailMonum.html.twig', [
+            'monuments' => $results,
+        ]);
+    }
+
 
 
     #[Route('/modifier/monument/{id}/{id2}', name: 'edit_monum')]

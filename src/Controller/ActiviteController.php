@@ -22,15 +22,19 @@ class ActiviteController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
 
-        $query = $entityManager->createQueryBuilder()
-            ->select('e.id','a.id as ida','e.nom','e.adresse','e.description','e.image', 'e.linkMap')
-            ->from(Endroit::class, 'e')
-            ->join(Activite::class, 'a', 'WITH', 'a.idEndroit = e.id')
-            ->getQuery();
-            $results = $query->getResult();
+        // $query = $entityManager->createQueryBuilder()
+        //     ->select('e.id','a.id as ida','e.nom','e.adresse','e.description','e.image', 'e.linkMap')
+        //     ->from(Endroit::class, 'e')
+        //     ->join(Activite::class, 'a', 'WITH', 'a.idEndroit = e.id')
+        //     ->getQuery();
+        //     $results = $query->getResult();
 
-        return $this->render('activite/afficherActivite.html.twig', [
-            'activites' => $results,
+        // return $this->render('activite/afficherActivite.html.twig', [
+        //     'activites' => $results,
+        // ]);
+
+        return $this->render('base4.html.twig', [
+            'test' => 'Admin',
         ]);
     }
 
@@ -88,6 +92,20 @@ class ActiviteController extends AbstractController
         ]);
     }
 
+    #[Route('/detail/activite', name:'detail_activite')]
+    public function detailMonum(EntityManagerInterface $entityManager ): Response
+    {
+        $query = $entityManager->createQueryBuilder()
+        ->select('e.id','a.id as ida','e.nom','e.adresse','e.description','e.image', 'e.linkMap')
+        ->from(Endroit::class, 'e')
+        ->join(Activite::class, 'a', 'WITH', 'a.idEndroit = e.id')
+        ->getQuery();
+        $results = $query->getResult();
+
+        return $this->render('activite/afficherDetailactiv.html.twig', [
+            'activites' => $results,
+        ]);
+    }
 
 
 
