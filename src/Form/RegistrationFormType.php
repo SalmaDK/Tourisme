@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\File;
 
 class RegistrationFormType extends AbstractType
 {
@@ -21,7 +24,6 @@ class RegistrationFormType extends AbstractType
             ->add('prenom')
             ->add('dateNais')
             ->add('email')
-
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -39,7 +41,22 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'required' => false, 
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Uploader une image valid (JPEG ou PNG)',
+                    ])
+                ],
+            ])
             ->add('telephone')
+            ->add("Valider",SubmitType::class)
 
         ;
     }
