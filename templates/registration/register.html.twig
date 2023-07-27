@@ -1,11 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'base4.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+    <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Inscription</h3>
+              </div>
+              <div class="card-body">
+            {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.nom) }}
@@ -19,4 +23,6 @@
 
         
     {{ form_end(registrationForm) }}
+              </div>
+            </div>
 {% endblock %}

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -20,10 +21,15 @@ class NouveauteController extends AbstractController
 
     #[Route('/Nouveaute', name:'nouveaute_list')]
      
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(SessionInterface $session,EntityManagerInterface $entityManager): Response
     {
-
-        $query = $entityManager->createQueryBuilder()
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+           
+            $query = $entityManager->createQueryBuilder()
             ->select('n.id','n.description','n.image', 'n.datePub','n.titreU','n.titreD')
             ->from(Nouveaute::class, 'n')
             ->getQuery();
@@ -32,12 +38,22 @@ class NouveauteController extends AbstractController
         return $this->render('nouveaute/afficheNouveaute.html.twig', [
             'nouveautes' => $results,
         ]);
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+        
     }
 
     #[Route('/ajouter/nouveaute', name: 'add_nouveaute')]
-    public function addNouveaute(Request $request, EntityManagerInterface $entityManager,SluggerInterface $slugger ): Response
+    public function addNouveaute(SessionInterface $session,Request $request, EntityManagerInterface $entityManager,SluggerInterface $slugger ): Response
     {
-        $nouveaute = new Nouveaute();
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+            $nouveaute = new Nouveaute();
         $form = $this->createForm(NouveauteFormType::class, $nouveaute);
         $form->handleRequest($request);
 
@@ -67,21 +83,27 @@ class NouveauteController extends AbstractController
         return $this->render('nouveaute/ajouterNouveaute.html.twig', [
             'nouveauteForm' => $form,
         ]);
+            
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+        
     }
 
 
 
 
  #[Route('/nouveaute/delete/{id2}', name: 'nouveaute_delete')]
-    public function delete(EntityManagerInterface $entityManager,$id2): Response //n9der ndir b7al edit f recuperation dial id
+    public function delete(SessionInterface $session,EntityManagerInterface $entityManager,$id2): Response //n9der ndir b7al edit f recuperation dial id
     {
-        $entity = $entityManager->getRepository(Nouveaute::class)->find($id2);
-
-
-        // $filesystem = new Filesystem(); //hadi katrecuperer les fichier li 3ndi. andirha bach n9der nmsse7 tsswira dialo li 3ndi; hadi kadir l accer l'image
-        // $imagePath = './uploads/' . $product->getImage();
-        // //hna hoa dar if existe 7it dar choix bach tkon image awla la ; ana image drtha daroori tkon(vid 12_min 15)
-        // $filesystem->remove($imagePath);
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+           
+            $entity = $entityManager->getRepository(Nouveaute::class)->find($id2);
 
         $entityManager->remove($entity); //enregistrer product
         $entityManager->flush(); //executer
@@ -93,11 +115,20 @@ class NouveauteController extends AbstractController
 
 
         return $this->redirectToRoute('nouveaute_list');
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+        
     }
 
     #[Route('/modifier/nouveaute/{id}', name: 'edit_nouveaute')]
-    public function ModifierCours(EntityManagerInterface $entityManager,Nouveaute $nouveaute,Request $request,$id,SluggerInterface $slugger){
-
+    public function ModifierCours(SessionInterface $session,EntityManagerInterface $entityManager,Nouveaute $nouveaute,Request $request,$id,SluggerInterface $slugger){
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
             $entity = $entityManager->getRepository(Nouveaute::class)->find($id);
             $form = $this->createForm(NouveauteFormType::class, $nouveaute);
             
@@ -131,6 +162,12 @@ class NouveauteController extends AbstractController
             return $this->render('nouveaute/ajouterNouveaute.html.twig', [
                 'nouveauteForm' => $form,
             ]);
+            
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+            
     }
     
     }

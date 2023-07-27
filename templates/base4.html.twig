@@ -38,7 +38,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="" class="nav-link">Home</a>
+        <a href="{{ path('app_home') }}" class="nav-link">Home</a>
       </li>
       
     </ul>
@@ -51,9 +51,8 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="" class="brand-link">
-      <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <a href="{{ path('app_home') }}" class="brand-link">
+      <span class="brand-text font-weight-light ">Tourisme</span>
     </a>
 
     <!-- Sidebar -->
@@ -61,10 +60,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('images/'~ app.user.image) }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ app.user.nom ~" " ~app.user.prenom  }}</a>
         </div>
       </div>
 
@@ -76,7 +75,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item">
+               {% if 'ADMIN' in app.session.get('roles') %}
+                <li class="nav-item">
             <a href="{{ path('nouveaute_list') }}" class="nav-link ">
               <i class="fa-thin fa-newspaper"></i>
                 Nouveaute
@@ -123,6 +123,80 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ path('app_logout') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Déconnexion
+              </p>
+            </a>
+          </li>
+               {% elseif 'SUPER-ADMIN' in app.session.get('roles') %}
+                <li class="nav-item">
+            <a href="{{ path('nouveaute_list') }}" class="nav-link ">
+              <i class="fa-thin fa-newspaper"></i>
+                Nouveaute
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{{ path('hotel_list') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Hotel
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{{ path('restau_list') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Restaurant
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{{ path('monum_list') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Monument historique
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{{ path('musee_list') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Musee
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{{ path('activite_list') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Activite
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ path('app_admin') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Administrateurs
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ path('app_logout') }}" class="nav-link ">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Déconnexion
+              </p>
+            </a>
+          </li>
+               {% endif %}
+         
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -1,0 +1,45 @@
+{% extends 'base4.html.twig' %}
+
+{% block title %}Administrateurs{% endblock %}
+
+{% block body %}
+      <div class="container-fluid mb-4" >
+         <div class=" d-flex justify-content-between align-items-center">
+                <h1>Activités</h1>
+                <a href="{{ path('add_admin') }}" class="btn btn-sm btn-primary">Ajouter</a>
+        </div>
+    </div>
+      
+      <div class ="table-responsive" style="max-height: 550px;overflow-y: scroll;">
+        <table class="table  table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Date de Naissance</th>
+                            <th>Image</th>
+                            <th>Telephone</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for admin in admins %}
+                        <tr>
+                            <td>{{ admin.nom }}</td>
+                            <td>{{ admin.prenom }}</td>
+                            <td>{{ admin.dateNais|date('Y-m-d') }}</td>
+                            <td>{{ admin.image }}</td>
+                            <td>{{ admin.telephone }}</td>
+                            <td>{{ admin.email }}</td>
+                            <td>
+                                {# <a href="{{ path('edit_activite',{id :activite.id , id2:activite.ida}) }}" class="btn btn-sm btn-warning" data-id="{{ activite.id }}">Modifier</a> #}
+                                <a href="{{ path('admin_delete',{id :admin.id }) }}" class="btn btn-sm btn-danger" >Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+{% endblock %}

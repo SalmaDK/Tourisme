@@ -19,10 +19,14 @@ class ActiviteController extends AbstractController
 
     #[Route('/Activite', name:'activite_list')]
      
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager,SessionInterface $session): Response
     {
-
-        $query = $entityManager->createQueryBuilder()
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+            $query = $entityManager->createQueryBuilder()
             ->select('e.id','a.id as ida','e.nom','e.adresse','e.description','e.image', 'e.linkMap')
             ->from(Endroit::class, 'e')
             ->join(Activite::class, 'a', 'WITH', 'a.idEndroit = e.id')
@@ -32,6 +36,13 @@ class ActiviteController extends AbstractController
         return $this->render('activite/afficherActivite.html.twig', [
             'activites' => $results,
         ]);
+            
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+
+       
 
    
     }

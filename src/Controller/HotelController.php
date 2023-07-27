@@ -23,10 +23,15 @@ class HotelController extends AbstractController
     
     #[Route('/hotel', name:'hotel_list')]
      
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager,SessionInterface $session): Response
     {
-
-        $query = $entityManager->createQueryBuilder()
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+           
+            $query = $entityManager->createQueryBuilder()
             ->select('e.id','h.id as idh','e.nom','e.adresse','e.description','e.image', 'e.linkMap','h.linkRes','h.nbretoile','h.equipement')
             ->from(Endroit::class, 'e')
             ->join(Hotel::class, 'h', 'WITH', 'h.idendroit = e.id')
@@ -36,6 +41,12 @@ class HotelController extends AbstractController
         return $this->render('hotel/afficheHotel.html.twig', [
             'hotels' => $results,
         ]);
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+
+       
     }
 
     #[Route('/Tourisme', name:'hotel_list2')]
@@ -75,8 +86,9 @@ class HotelController extends AbstractController
 
     #[Route('/detail/hotel/{id}', name:'detail_hotel')]
      
-    public function detailHotel(EntityManagerInterface $entityManager ,$id): Response
+    public function detailHotel(EntityManagerInterface $entityManager ,$id,SessionInterface $session): Response
     {
+       
 
         $query = $entityManager->createQueryBuilder()
         ->select('e.id','h.id as idh','e.nom','e.adresse','e.description','e.image', 'e.linkMap','h.linkRes','h.nbretoile','h.equipement')
@@ -96,7 +108,13 @@ class HotelController extends AbstractController
 
     #[Route('/ajouter/hotel', name: 'add_hotel')]
     public function AjouterHotel(Request $request,SessionInterface $session,EntityManagerInterface $entityManager,SluggerInterface $slugger): Response
-    {   $session = $request->getSession();
+    {  
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+            $session = $request->getSession();
         $session->set("typeEndroit","Hotel");
         $endroit = new Endroit();
         $hotel = new Hotel();
@@ -138,39 +156,56 @@ class HotelController extends AbstractController
         return $this->render('hotel/ajouterHotel.html.twig', [
             'hotelForm' => $form,
         ]);
+            
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+       
     }
 
 
 
     #[Route('/hotel/delete/{id}/{id2}', name: 'hotel_delete')]
-    public function delete(EntityManagerInterface $entityManager, $id,$id2): Response //n9der ndir b7al edit f recuperation dial id
+    public function delete(EntityManagerInterface $entityManager, $id,$id2,SessionInterface $session): Response //n9der ndir b7al edit f recuperation dial id
     {
-        $entity = $entityManager->getRepository(Hotel::class)->find($id2);
-        $entity2 = $entityManager->getRepository(Endroit::class)->find($id);
-
-        // $filesystem = new Filesystem(); //hadi katrecuperer les fichier li 3ndi. andirha bach n9der nmsse7 tsswira dialo li 3ndi; hadi kadir l accer l'image
-        // $imagePath = './uploads/' . $product->getImage();
-        // //hna hoa dar if existe 7it dar choix bach tkon image awla la ; ana image drtha daroori tkon(vid 12_min 15)
-        // $filesystem->remove($imagePath);
-
-        $entityManager->remove($entity); //enregistrer product
-        $entityManager->flush(); //executer
-        $entityManager->remove($entity2); //enregistrer product
-        $entityManager->flush(); 
-
-        $this->addFlash(
-            'success',
-            'Suprission avec success'
-        );
-
-
-        return $this->redirectToRoute('hotel_list');
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+            $entity = $entityManager->getRepository(Hotel::class)->find($id2);
+            $entity2 = $entityManager->getRepository(Endroit::class)->find($id);
+    
+            $entityManager->remove($entity);
+            $entityManager->flush(); 
+            $entityManager->remove($entity2); 
+            $entityManager->flush(); 
+    
+            $this->addFlash(
+                'success',
+                'Suprission avec success'
+            );
+    
+    
+            return $this->redirectToRoute('hotel_list');
+            
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+       
     }
     
     #[Route('/modifier/hotel/{id}/{id2}', name: 'edit_hotel')]
-    public function ModifierEndroit(EntityManagerInterface $entityManager,Endroit $endroit,Request $request,$id,$id2,SluggerInterface $slugger){
-
-        $session = $request->getSession();
+    public function ModifierEndroit(SessionInterface $session,EntityManagerInterface $entityManager,Endroit $endroit,Request $request,$id,$id2,SluggerInterface $slugger){
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        } 
+        $roles = $session->get('roles');
+        if(in_array('SUPER-ADMIN',$roles) || in_array('ADMIN',$roles)  ){
+           
+            $session = $request->getSession();
         $session->set("typeEndroit","Hotel");
             $entity = $entityManager->getRepository(Endroit::class)->find($id);
             $entity2 = $entityManager->getRepository(Hotel::class)->find($id2);
@@ -218,6 +253,11 @@ class HotelController extends AbstractController
             return $this->render('hotel/ajouterHotel.html.twig', [
                 'hotelForm' => $form,
             ]);
+        }
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'AddCoursController',
+        ]);
+        
     }
 
 
